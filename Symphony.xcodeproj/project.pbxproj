@@ -75,15 +75,15 @@
 				424CB5D61C3F33C200B87DF7 /* LoginComposer.swift */,
 				424CB5D81C3F33D300B87DF7 /* MainComposer.swift */,
 			);
-			name = Mocks;
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		42F51F7F1C35E65000359D0E = {
 			isa = PBXGroup;
 			children = (
+				42F51F8A1C35E65000359D0E /* Products */,
 				42F51F8B1C35E65000359D0E /* Symphony */,
 				42F51F971C35E65100359D0E /* SymphonyTests */,
-				42F51F8A1C35E65000359D0E /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,12 +99,12 @@
 		42F51F8B1C35E65000359D0E /* Symphony */ = {
 			isa = PBXGroup;
 			children = (
-				42F51F8C1C35E65000359D0E /* Symphony.h */,
-				42F51F8E1C35E65000359D0E /* Info.plist */,
 				42F51FA51C35E6CF00359D0E /* Composer.swift */,
-				424CB5CE1C3F31C500B87DF7 /* State.swift */,
-				424CB5D01C3F31E000B87DF7 /* Event.swift */,
 				424CB5D21C3F323D00B87DF7 /* Container.swift */,
+				424CB5D01C3F31E000B87DF7 /* Event.swift */,
+				42F51F8E1C35E65000359D0E /* Info.plist */,
+				424CB5CE1C3F31C500B87DF7 /* State.swift */,
+				42F51F8C1C35E65000359D0E /* Symphony.h */,
 			);
 			path = Symphony;
 			sourceTree = "<group>";
@@ -113,10 +113,10 @@
 			isa = PBXGroup;
 			children = (
 				424CB5CD1C3F309F00B87DF7 /* Mocks */,
-				42F51F9A1C35E65100359D0E /* Info.plist */,
 				42F51FA31C35E66400359D0E /* ComposerTests.swift */,
-				424CB5DA1C3F3C9B00B87DF7 /* StateTests.swift */,
 				424CB5DC1C3F40E400B87DF7 /* EventTests.swift */,
+				42F51F9A1C35E65100359D0E /* Info.plist */,
+				424CB5DA1C3F3C9B00B87DF7 /* StateTests.swift */,
 			);
 			path = SymphonyTests;
 			sourceTree = "<group>";
