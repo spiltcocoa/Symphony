@@ -102,8 +102,8 @@
 				42F51FA51C35E6CF00359D0E /* Composer.swift */,
 				424CB5D21C3F323D00B87DF7 /* Container.swift */,
 				424CB5D01C3F31E000B87DF7 /* Event.swift */,
-				42F51F8E1C35E65000359D0E /* Info.plist */,
 				424CB5CE1C3F31C500B87DF7 /* State.swift */,
+				42F51F8E1C35E65000359D0E /* Info.plist */,
 				42F51F8C1C35E65000359D0E /* Symphony.h */,
 			);
 			path = Symphony;
