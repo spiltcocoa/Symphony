@@ -13,7 +13,7 @@ public protocol Composable: class {
 }
 
 public protocol ComposerType: class {
-    typealias Container: ContainerType
+    associatedtype Container: ContainerType
     var container: Container { get }
     var currentComposable: Composable? { get set }
 }
