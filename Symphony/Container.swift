@@ -6,12 +6,6 @@
 //  Copyright © 2016 Spilt Cocoa. All rights reserved.
 //
 
-public protocol ContainerType { }
-
-extension UINavigationController: ContainerType {}
-extension ContainerViewController: ContainerType {}
-
-
 // A completely unadorned viewController container.
 // i.e. no TabBar, NavigationBar, etc.. It just hot swaps children.
 // Easy to swap other ViewControllers into with state changes.

@@ -13,11 +13,10 @@ public protocol Composable: class {
 }
 
 public protocol ComposerType: class {
-    associatedtype Container: ContainerType
+    associatedtype Container: UIViewController
     var container: Container { get }
     var currentComposable: Composable? { get set }
 }
-
 
 
 public extension ComposerType where Container: UIViewController {
