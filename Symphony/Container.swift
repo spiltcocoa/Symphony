@@ -9,7 +9,7 @@
 // A completely unadorned viewController container.
 // i.e. no TabBar, NavigationBar, etc.. It just hot swaps children.
 // Easy to swap other ViewControllers into with state changes.
-public class ContainerViewController: UIViewController {
+public class ParentViewController: UIViewController {
 
     // MARK: - Properties
     private var childViewController: UIViewController?

@@ -47,7 +47,7 @@ public extension ComposerType where Container: UINavigationController {
     }
 }
 
-public extension ComposerType where Container: ContainerViewController {
+public extension ComposerType where Container: ParentViewController {
     public func showComposable(composable: Composable) {
         currentComposable = composable
         container.showViewController(composable.viewController)

@@ -9,7 +9,7 @@
 import Symphony
 
 class ApplicationComposer: ComposerType {
-    lazy var container = ContainerViewController()
+    lazy var container = ParentViewController()
     var currentComposable: Composable? = nil
     var currentState: State = .Login
     var receivedStateMessage = false

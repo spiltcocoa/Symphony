@@ -9,7 +9,7 @@
 import Symphony
 
 class MainComposer: ComposerType {
-    lazy var container = ContainerViewController()
+    lazy var container = ParentViewController()
     var currentComposable: Composable? = nil
     var currentState: State = .None
 }
