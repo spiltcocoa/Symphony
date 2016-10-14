@@ -12,3 +12,7 @@ import UIKit
 public protocol Composable: class {
     var viewController: UIViewController { get }
 }
+
+public extension Composable where Self: Composer {
+    var viewController: UIViewController { return containerViewController }
+}
