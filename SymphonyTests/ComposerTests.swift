@@ -9,18 +9,54 @@
 import XCTest
 @testable import Symphony
 
-class ComposerTests: XCTestCase {
+class GenericComposer<Container: UIViewController>: Composer {
+    typealias ContainerViewController = Container
+    let containerViewController = Container()
+    var currentComposables: [Composable] = []
+}
 
-    func testThatContainerViewControllerShowsComposable() {
-        // given
-        let applicationComposer = ApplicationComposer()
-        let loginComposer = LoginComposer()
+// We can't use a `ViewController: Composable` for these, because the VC stack
+// handles it's own memory management.
+class BasicComposable: Composable { let viewController = UIViewController() }
 
-        // when
-        applicationComposer.showComposable(loginComposer)
+class UIComposer: XCTestCase {
 
-        // then
-        XCTAssert(applicationComposer.currentComposable === loginComposer)
+    let composer = GenericComposer<UIViewController>()
+
+    func xtest_whenPresents_isPresenting() {
+        let composable = BasicComposable()
+
+        composer.presentComposable(composable)
+
+        // Can't currently test because I don't know how to put the composer into a window heirarchy
+        // let currentlyPresented = composer.containerViewController.presentedViewController
+        // XCTAssert(currentlyPresented === composable.viewController)
     }
 
+    func test_whenPresents_presentedIsRetained() {
+        weak var weakComposable: BasicComposable?
+
+        autoreleasepool {
+            let composable = BasicComposable()
+            weakComposable = composable
+            composer.presentComposable(composable)
+        }
+
+        XCTAssertNotNil(weakComposable)
+    }
+
+    func xtest_whenDismisses_presentedIsReleased() {
+        weak var weakComposable: BasicComposable?
+
+        autoreleasepool {
+            let composable = BasicComposable()
+            weakComposable = composable
+            composer.presentComposable(composable)
+        }
+        composer.dismissComposableAnimated()
+
+        // Need to figure out the window heirarchy to test this too, since we can't
+        // figure out which composable to release if there's no `presentedViewController`
+        XCTAssertNil(weakComposable)
+    }
 }
