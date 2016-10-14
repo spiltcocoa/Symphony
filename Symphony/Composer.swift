@@ -55,7 +55,10 @@ public extension Composer where ContainerViewController: UINavigationController 
     }
 
     public func setComposables(composables: [Composable], animated: Bool = false) {
-        currentComposables = composables
+        currentComposables = currentComposables.filter {
+            $0.viewController === containerViewController.presentedViewController
+        }
+        currentComposables += composables
         containerViewController.setViewControllers(composables.map { $0.viewController }, animated: animated)
     }
 }
