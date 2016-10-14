@@ -10,7 +10,7 @@ import Symphony
 
 class LoginComposer: Composer, Composable {
     lazy var containerViewController = ParentViewController()
-    var currentComposable: Composable? = nil
+    var currentComposables: [Composable] = []
     var currentState: State = .Main
     var eventListener: (Event -> Void)? = nil
 }

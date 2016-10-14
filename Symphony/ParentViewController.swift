@@ -42,7 +42,7 @@ public class ParentViewController: UIViewController {
 
 public extension Composer where ContainerViewController: ParentViewController {
     public func showComposable(composable: Composable) {
-        currentComposable = composable
+        currentComposables = [composable]
         containerViewController.showViewController(composable.viewController)
     }
 }

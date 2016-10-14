@@ -14,7 +14,7 @@ class EventTests: XCTestCase {
         // given
         let applicationComposer = ApplicationComposer()
         applicationComposer.start()
-        guard let loginComposer = applicationComposer.currentComposable as? LoginComposer else {
+        guard let loginComposer = applicationComposer.currentComposables.first as? LoginComposer else {
             XCTFail()
             return
         }
