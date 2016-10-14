@@ -8,17 +8,11 @@
 
 import UIKit
 
-public protocol Composable: class {
-    var viewController: UIViewController { get }
-}
-
 public protocol Composer: class {
     associatedtype ContainerViewController: UIViewController
     var containerViewController: ContainerViewController { get }
     var currentComposable: Composable? { get set }
 }
-
-
 
 public extension Composer where ContainerViewController: UIViewController {
     public func presentComposable(composable: Composable, animated: Bool = false) {
@@ -45,12 +39,5 @@ public extension Composer where ContainerViewController: UINavigationController 
     public func setComposables(composables: [Composable], animated: Bool = false) {
         currentComposable = composables.last
         containerViewController.setViewControllers(composables.map { $0.viewController }, animated: animated)
-    }
-}
-
-public extension Composer where ContainerViewController: ParentViewController {
-    public func showComposable(composable: Composable) {
-        currentComposable = composable
-        containerViewController.showViewController(composable.viewController)
     }
 }

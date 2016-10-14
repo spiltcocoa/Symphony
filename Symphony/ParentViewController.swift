@@ -1,5 +1,5 @@
 //
-//  Container.swift
+//  ParentViewController.swift
 //  Symphony
 //
 //  Created by Jeff Boek on 1/7/16.
@@ -37,5 +37,12 @@ public class ParentViewController: UIViewController {
         view.addSubview(viewController.view)
         viewController.didMoveToParentViewController(self)
         setNeedsStatusBarAppearanceUpdate()
+    }
+}
+
+public extension Composer where ContainerViewController: ParentViewController {
+    public func showComposable(composable: Composable) {
+        currentComposable = composable
+        containerViewController.showViewController(composable.viewController)
     }
 }

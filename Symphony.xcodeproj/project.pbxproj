@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3104CED51DB059E70013D1DC /* Composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3104CED41DB059E70013D1DC /* Composable.swift */; };
 		424CB5CF1C3F31C500B87DF7 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424CB5CE1C3F31C500B87DF7 /* State.swift */; };
 		424CB5D11C3F31E000B87DF7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424CB5D01C3F31E000B87DF7 /* Event.swift */; };
-		424CB5D31C3F323D00B87DF7 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424CB5D21C3F323D00B87DF7 /* Container.swift */; };
+		424CB5D31C3F323D00B87DF7 /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424CB5D21C3F323D00B87DF7 /* ParentViewController.swift */; };
 		424CB5D51C3F331400B87DF7 /* ApplicationComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424CB5D41C3F331400B87DF7 /* ApplicationComposer.swift */; };
 		424CB5D71C3F33C200B87DF7 /* LoginComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424CB5D61C3F33C200B87DF7 /* LoginComposer.swift */; };
 		424CB5D91C3F33D300B87DF7 /* MainComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424CB5D81C3F33D300B87DF7 /* MainComposer.swift */; };
@@ -32,9 +33,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3104CED41DB059E70013D1DC /* Composable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Composable.swift; sourceTree = "<group>"; };
 		424CB5CE1C3F31C500B87DF7 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		424CB5D01C3F31E000B87DF7 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		424CB5D21C3F323D00B87DF7 /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		424CB5D21C3F323D00B87DF7 /* ParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
 		424CB5D41C3F331400B87DF7 /* ApplicationComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationComposer.swift; sourceTree = "<group>"; };
 		424CB5D61C3F33C200B87DF7 /* LoginComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginComposer.swift; sourceTree = "<group>"; };
 		424CB5D81C3F33D300B87DF7 /* MainComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainComposer.swift; sourceTree = "<group>"; };
@@ -100,7 +102,8 @@
 			isa = PBXGroup;
 			children = (
 				42F51FA51C35E6CF00359D0E /* Composer.swift */,
-				424CB5D21C3F323D00B87DF7 /* Container.swift */,
+				3104CED41DB059E70013D1DC /* Composable.swift */,
+				424CB5D21C3F323D00B87DF7 /* ParentViewController.swift */,
 				424CB5D01C3F31E000B87DF7 /* Event.swift */,
 				424CB5CE1C3F31C500B87DF7 /* State.swift */,
 				42F51F8E1C35E65000359D0E /* Info.plist */,
@@ -231,8 +234,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3104CED51DB059E70013D1DC /* Composable.swift in Sources */,
 				42F51FA61C35E6CF00359D0E /* Composer.swift in Sources */,
-				424CB5D31C3F323D00B87DF7 /* Container.swift in Sources */,
+				424CB5D31C3F323D00B87DF7 /* ParentViewController.swift in Sources */,
 				424CB5D11C3F31E000B87DF7 /* Event.swift in Sources */,
 				424CB5CF1C3F31C500B87DF7 /* State.swift in Sources */,
 			);
