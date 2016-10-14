@@ -16,10 +16,10 @@ class StateTests: XCTestCase {
         let applicationComposer = ApplicationComposer()
 
         // when
-        applicationComposer.transitionToState(.Main)
+        applicationComposer.transitionToState(.main)
 
         // then
-        XCTAssertTrue(applicationComposer.currentState == .Main)
+        XCTAssertTrue(applicationComposer.currentState == .main)
     }
 
     func testThatItSendsSuccessMessage() {
@@ -27,7 +27,7 @@ class StateTests: XCTestCase {
         let applicationComposer = ApplicationComposer()
 
         // when
-        applicationComposer.transitionToState(.Main)
+        applicationComposer.transitionToState(.main)
 
         // then
         XCTAssertTrue(applicationComposer.receivedStateMessage)
@@ -38,8 +38,8 @@ class StateTests: XCTestCase {
         let composer = ApplicationComposer()
 
         // when
-        let validTransition = composer.currentState.canTransitionToState(.Main)
-        let invalidTransition = composer.currentState.canTransitionToState(.Logout)
+        let validTransition = composer.currentState.canTransitionToState(.main)
+        let invalidTransition = composer.currentState.canTransitionToState(.logout)
 
         // then
         XCTAssertTrue(validTransition)

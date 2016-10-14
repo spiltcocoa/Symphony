@@ -20,7 +20,7 @@ class EventTests: XCTestCase {
         }
 
         // when
-        loginComposer.transitionToState(.Finished)
+        loginComposer.transitionToState(.finished)
 
         // then
         XCTAssertTrue(applicationComposer.receivedEvent)

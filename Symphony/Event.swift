@@ -11,6 +11,6 @@ public protocol EventType {}
 
 public protocol Eventable {
     associatedtype Event: EventType
-    associatedtype ListenerType = Event -> Void
+    associatedtype ListenerType = (Event) -> Void
     var eventListener: ListenerType? { get set }
 }

@@ -27,14 +27,14 @@ class UIComposer: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        guard let window = UIApplication.sharedApplication().keyWindow else { XCTFail(); return }
+        guard let window = UIApplication.shared.keyWindow else { XCTFail(); return }
         preTestRootViewController = window.rootViewController
         window.rootViewController = composer.containerViewController
     }
 
     override func tearDown() {
         super.tearDown()
-        UIApplication.sharedApplication().keyWindow?.rootViewController = preTestRootViewController
+        UIApplication.shared.keyWindow?.rootViewController = preTestRootViewController
     }
 
     func test_whenPresents_isPresenting() {
@@ -80,14 +80,14 @@ class ParentComposer: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        guard let window = UIApplication.sharedApplication().keyWindow else { XCTFail(); return }
+        guard let window = UIApplication.shared.keyWindow else { XCTFail(); return }
         preTestRootViewController = window.rootViewController
         window.rootViewController = composer.containerViewController
     }
 
     override func tearDown() {
         super.tearDown()
-        UIApplication.sharedApplication().keyWindow?.rootViewController = preTestRootViewController
+        UIApplication.shared.keyWindow?.rootViewController = preTestRootViewController
     }
 
     func test_whenShows_isShowing() {
@@ -178,14 +178,14 @@ class NavigationComposerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        guard let window = UIApplication.sharedApplication().keyWindow else { XCTFail(); return }
+        guard let window = UIApplication.shared.keyWindow else { XCTFail(); return }
         preTestRootViewController = window.rootViewController
         window.rootViewController = composer.containerViewController
     }
 
     override func tearDown() {
         super.tearDown()
-        UIApplication.sharedApplication().keyWindow?.rootViewController = preTestRootViewController
+        UIApplication.shared.keyWindow?.rootViewController = preTestRootViewController
     }
 
     func test_whenPushes_isShowingPushed() {

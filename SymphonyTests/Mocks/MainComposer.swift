@@ -11,27 +11,27 @@ import Symphony
 class MainComposer: Composer {
     lazy var containerViewController = ParentViewController()
     var currentComposables: [Composable] = []
-    var currentState: State = .None
+    var currentState: State = .none
 }
 
 extension MainComposer: Stateable {
     enum State: StateType {
-        case None
+        case none
 
-        func canTransitionToState(state: State) -> Bool {
+        func canTransitionToState(_ state: State) -> Bool {
             switch(self, state) {
-            case(.None, .None): return true
+            case(.none, .none): return true
             }
         }
     }
 
-    func didTransitionFromState(state: State, toState: State) {
+    func didTransitionFromState(_ state: State, toState: State) {
         
     }
 }
 
 extension MainComposer: EventType {
     enum Event: EventType {
-        case Logout
+        case logout
     }
 }

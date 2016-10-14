@@ -9,10 +9,10 @@
 // A completely unadorned viewController container.
 // i.e. no TabBar, NavigationBar, etc.. It just hot swaps children.
 // Easy to swap other ViewControllers into with state changes.
-public class ParentViewController: UIViewController {
+open class ParentViewController: UIViewController {
 
     // MARK: - Properties
-    public private(set) var childViewController: UIViewController?
+    open fileprivate(set) var childViewController: UIViewController?
 
     // MARK: - Init
     public convenience init() {
@@ -20,13 +20,13 @@ public class ParentViewController: UIViewController {
     }
 
     // MARK: - ViewContoller Containment
-    override public func childViewControllerForStatusBarStyle() -> UIViewController? {
+    override open var childViewControllerForStatusBarStyle : UIViewController? {
         return childViewController
     }
 
-    func showViewController(viewController: UIViewController) {
+    func showViewController(_ viewController: UIViewController) {
         if let existingVC = childViewController {
-            existingVC.willMoveToParentViewController(nil)
+            existingVC.willMove(toParentViewController: nil)
             existingVC.view.removeFromSuperview()
             existingVC.removeFromParentViewController()
         }
@@ -35,13 +35,13 @@ public class ParentViewController: UIViewController {
         addChildViewController(viewController)
         viewController.view.frame = view.bounds
         view.addSubview(viewController.view)
-        viewController.didMoveToParentViewController(self)
+        viewController.didMove(toParentViewController: self)
         setNeedsStatusBarAppearanceUpdate()
     }
 }
 
 public extension Composer where ContainerViewController: ParentViewController {
-    public func showComposable(composable: Composable) {
+    public func showComposable(_ composable: Composable) {
         currentComposables = currentComposables.filter {
             $0.viewController === containerViewController.presentedViewController
         }
