@@ -76,6 +76,20 @@ class ParentComposer: XCTestCase {
 
     let composer = GenericComposer<ParentViewController>()
 
+    var preTestRootViewController: UIViewController?
+
+    override func setUp() {
+        super.setUp()
+        guard let window = UIApplication.sharedApplication().keyWindow else { XCTFail(); return }
+        preTestRootViewController = window.rootViewController
+        window.rootViewController = composer.containerViewController
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        UIApplication.sharedApplication().keyWindow?.rootViewController = preTestRootViewController
+    }
+
     func test_whenShows_isShowing() {
         let composable = BasicComposable()
 
@@ -151,9 +165,7 @@ class ParentComposer: XCTestCase {
 
         XCTAssertNil(weakOldChildComposable)
         XCTAssertNotNil(weakNewChildComposable)
-
-        // TODO: We need to find a way to host a UIWindow, otherwise we can't test this
-//        XCTAssertNotNil(weakPresentedComposable)
+        XCTAssertNotNil(weakPresentedComposable)
     }
 }
 
