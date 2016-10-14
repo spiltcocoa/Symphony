@@ -9,14 +9,14 @@
 import Symphony
 
 class LoginComposer: ComposerType {
-    lazy var container = ParentViewController()
+    lazy var containerViewController = ParentViewController()
     var currentComposable: Composable? = nil
     var currentState: State = .Main
     var eventListener: (Event -> Void)? = nil
 }
 
 extension LoginComposer: Composable {
-    var viewController: UIViewController { return container }
+    var viewController: UIViewController { return containerViewController }
 }
 
 extension LoginComposer: Stateable {

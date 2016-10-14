@@ -13,43 +13,44 @@ public protocol Composable: class {
 }
 
 public protocol ComposerType: class {
-    associatedtype Container: UIViewController
-    var container: Container { get }
+    associatedtype ContainerViewController: UIViewController
+    var containerViewController: ContainerViewController { get }
     var currentComposable: Composable? { get set }
 }
 
 
-public extension ComposerType where Container: UIViewController {
+
+public extension ComposerType where ContainerViewController: UIViewController {
     public func presentComposable(composable: Composable, animated: Bool = false) {
         currentComposable = composable
-        container.presentViewController(composable.viewController, animated: animated, completion: nil)
+        containerViewController.presentViewController(composable.viewController, animated: animated, completion: nil)
     }
 
     public func dismissComposableAnimated(animated: Bool = false) {
-        container.dismissViewControllerAnimated(animated, completion: nil)
+        containerViewController.dismissViewControllerAnimated(animated, completion: nil)
     }
 }
 
-public extension ComposerType where Container: UINavigationController {
+public extension ComposerType where ContainerViewController: UINavigationController {
     public func pushComposable(composable: Composable, animated: Bool = false) {
         currentComposable = composable
-        container.pushViewController(composable.viewController, animated: animated)
+        containerViewController.pushViewController(composable.viewController, animated: animated)
     }
 
     public func popComposable(animated: Bool = false) {
-        container.popViewControllerAnimated(animated)
+        containerViewController.popViewControllerAnimated(animated)
         //        currentComposable = container.viewControllers.last
     }
 
     public func setComposables(composables: [Composable], animated: Bool = false) {
         currentComposable = composables.last
-        container.setViewControllers(composables.map { $0.viewController }, animated: animated)
+        containerViewController.setViewControllers(composables.map { $0.viewController }, animated: animated)
     }
 }
 
-public extension ComposerType where Container: ParentViewController {
+public extension ComposerType where ContainerViewController: ParentViewController {
     public func showComposable(composable: Composable) {
         currentComposable = composable
-        container.showViewController(composable.viewController)
+        containerViewController.showViewController(composable.viewController)
     }
 }
