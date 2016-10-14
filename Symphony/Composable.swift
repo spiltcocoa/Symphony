@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// a type that can be presented by a Composer.
 public protocol Composable: class {
     var viewController: UIViewController { get }
 }
