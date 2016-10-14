@@ -12,7 +12,7 @@ public protocol Composable: class {
     var viewController: UIViewController { get }
 }
 
-public protocol ComposerType: class {
+public protocol Composer: class {
     associatedtype ContainerViewController: UIViewController
     var containerViewController: ContainerViewController { get }
     var currentComposable: Composable? { get set }
@@ -20,7 +20,7 @@ public protocol ComposerType: class {
 
 
 
-public extension ComposerType where ContainerViewController: UIViewController {
+public extension Composer where ContainerViewController: UIViewController {
     public func presentComposable(composable: Composable, animated: Bool = false) {
         currentComposable = composable
         containerViewController.presentViewController(composable.viewController, animated: animated, completion: nil)
@@ -31,7 +31,7 @@ public extension ComposerType where ContainerViewController: UIViewController {
     }
 }
 
-public extension ComposerType where ContainerViewController: UINavigationController {
+public extension Composer where ContainerViewController: UINavigationController {
     public func pushComposable(composable: Composable, animated: Bool = false) {
         currentComposable = composable
         containerViewController.pushViewController(composable.viewController, animated: animated)
@@ -48,7 +48,7 @@ public extension ComposerType where ContainerViewController: UINavigationControl
     }
 }
 
-public extension ComposerType where ContainerViewController: ParentViewController {
+public extension Composer where ContainerViewController: ParentViewController {
     public func showComposable(composable: Composable) {
         currentComposable = composable
         containerViewController.showViewController(composable.viewController)
