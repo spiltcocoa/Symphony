@@ -12,7 +12,7 @@
 public class ParentViewController: UIViewController {
 
     // MARK: - Properties
-    private var childViewController: UIViewController?
+    public private(set) var childViewController: UIViewController?
 
     // MARK: - Init
     public convenience init() {

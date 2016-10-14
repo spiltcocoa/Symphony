@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Symphony
+import Symphony
 
 class GenericComposer<Container: UIViewController>: Composer {
     typealias ContainerViewController = Container
@@ -60,3 +60,89 @@ class UIComposer: XCTestCase {
         XCTAssertNil(weakComposable)
     }
 }
+
+class ParentComposer: XCTestCase {
+
+    let composer = GenericComposer<ParentViewController>()
+
+    func test_whenShows_isShowing() {
+        let composable = BasicComposable()
+
+        composer.showComposable(composable)
+
+        let currentlyShown = composer.containerViewController.childViewController
+        XCTAssert(currentlyShown === composable.viewController)
+    }
+
+    func test_whenShows_childIsRetained() {
+        weak var weakComposable: BasicComposable?
+
+        autoreleasepool {
+            let composable = BasicComposable()
+            weakComposable = composable
+            composer.showComposable(composable)
+        }
+
+        XCTAssertNotNil(weakComposable)
+    }
+
+    func test_whenShows_oldChildIsReleased() {
+        weak var weakOldComposable: BasicComposable?
+        weak var weakNewComposable: BasicComposable?
+
+        autoreleasepool {
+            let oldComposable = BasicComposable()
+            let newComposable = BasicComposable()
+            weakOldComposable = oldComposable
+            weakNewComposable = newComposable
+            composer.showComposable(oldComposable)
+            composer.showComposable(newComposable)
+        }
+
+        XCTAssertNil(weakOldComposable)
+        XCTAssertNotNil(weakNewComposable)
+    }
+
+
+    func test_whenPresents_childAndPresentedAreBothRetained() {
+        weak var weakChildComposable: BasicComposable?
+        weak var weakPresentedComposable: BasicComposable?
+
+        autoreleasepool {
+            let childComposable = BasicComposable()
+            let presentedComposable = BasicComposable()
+            weakChildComposable = childComposable
+            weakPresentedComposable = presentedComposable
+            composer.showComposable(childComposable)
+            composer.presentComposable(presentedComposable)
+        }
+
+        XCTAssertNotNil(weakChildComposable)
+        XCTAssertNotNil(weakPresentedComposable)
+    }
+
+    func test_whenShowingWhilePresenting_newChildAndPresentedAreRetained_oldChildIsReleased() {
+        weak var weakOldChildComposable: BasicComposable?
+        weak var weakNewChildComposable: BasicComposable?
+        weak var weakPresentedComposable: BasicComposable?
+
+        autoreleasepool {
+            let oldChildComposable = BasicComposable()
+            let newChildComposable = BasicComposable()
+            let presentedComposable = BasicComposable()
+            weakOldChildComposable = oldChildComposable
+            weakNewChildComposable = newChildComposable
+            weakPresentedComposable = presentedComposable
+            composer.showComposable(oldChildComposable)
+            composer.presentComposable(presentedComposable)
+            composer.showComposable(newChildComposable)
+        }
+
+        XCTAssertNil(weakOldChildComposable)
+        XCTAssertNotNil(weakNewChildComposable)
+
+        // TODO: We need to find a way to host a UIWindow, otherwise we can't test this
+//        XCTAssertNotNil(weakPresentedComposable)
+    }
+}
+
