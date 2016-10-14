@@ -33,6 +33,13 @@
 			remoteGlobalIDString = 3104CEF31DB171390013D1DC;
 			remoteInfo = SymphonyTestsHost;
 		};
+		3104CF081DB176A40013D1DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42F51F801C35E65000359D0E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42F51F881C35E65000359D0E;
+			remoteInfo = Symphony;
+		};
 		42F51F951C35E65100359D0E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 42F51F801C35E65000359D0E /* Project object */;
@@ -184,6 +191,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3104CF091DB176A40013D1DC /* PBXTargetDependency */,
 			);
 			name = SymphonyTestsHost;
 			productName = SymphonyTestsHost;
@@ -339,6 +347,11 @@
 			isa = PBXTargetDependency;
 			target = 3104CEF31DB171390013D1DC /* SymphonyTestsHost */;
 			targetProxy = 3104CF061DB171F70013D1DC /* PBXContainerItemProxy */;
+		};
+		3104CF091DB176A40013D1DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42F51F881C35E65000359D0E /* Symphony */;
+			targetProxy = 3104CF081DB176A40013D1DC /* PBXContainerItemProxy */;
 		};
 		42F51F961C35E65100359D0E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

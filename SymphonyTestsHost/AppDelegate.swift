@@ -15,8 +15,10 @@ class AppDelegate: UIViewController, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-        window?.rootViewController = self
-        window?.makeKeyAndVisible()
+        let window = UIWindow()
+        window.rootViewController = self
+        window.makeKeyAndVisible()
+        self.window = window
         return true
     }
 }

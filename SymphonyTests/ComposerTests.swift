@@ -23,14 +23,27 @@ class UIComposer: XCTestCase {
 
     let composer = GenericComposer<UIViewController>()
 
-    func xtest_whenPresents_isPresenting() {
+    var preTestRootViewController: UIViewController?
+
+    override func setUp() {
+        super.setUp()
+        guard let window = UIApplication.sharedApplication().keyWindow else { XCTFail(); return }
+        preTestRootViewController = window.rootViewController
+        window.rootViewController = composer.containerViewController
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        UIApplication.sharedApplication().keyWindow?.rootViewController = preTestRootViewController
+    }
+
+    func test_whenPresents_isPresenting() {
         let composable = BasicComposable()
 
         composer.presentComposable(composable)
 
-        // Can't currently test because I don't know how to put the composer into a window heirarchy
-        // let currentlyPresented = composer.containerViewController.presentedViewController
-        // XCTAssert(currentlyPresented === composable.viewController)
+        let currentlyPresented = composer.containerViewController.presentedViewController
+        XCTAssert(currentlyPresented === composable.viewController)
     }
 
     func test_whenPresents_presentedIsRetained() {
@@ -45,7 +58,7 @@ class UIComposer: XCTestCase {
         XCTAssertNotNil(weakComposable)
     }
 
-    func xtest_whenDismisses_presentedIsReleased() {
+    func test_whenDismisses_presentedIsReleased() {
         weak var weakComposable: BasicComposable?
 
         autoreleasepool {
@@ -55,8 +68,6 @@ class UIComposer: XCTestCase {
         }
         composer.dismissComposableAnimated()
 
-        // Need to figure out the window heirarchy to test this too, since we can't
-        // figure out which composable to release if there's no `presentedViewController`
         XCTAssertNil(weakComposable)
     }
 }
