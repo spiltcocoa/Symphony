@@ -8,49 +8,50 @@
 
 import UIKit
 
-public protocol Composable: class {
-    var viewController: UIViewController { get }
-}
+/// A type that manages the presentation of one or many Composables
+public protocol Composer: class {
 
-public protocol ComposerType: class {
-    typealias Container: ContainerType
-    var container: Container { get }
+    /// The ViewController type that the composer will use to contain
+    /// and present the viewControllers of it's children
+    associatedtype ContainerViewController: UIViewController
+
+    /// The viewController instance that the composer will use to contain
+    /// and present the viewControllers of it's children
+    var containerViewController: ContainerViewController { get }
+
+    /// A reference to the currently presented composable.
+    /// This is generally only necissary for memory management,
+    /// and shouldn't need to be messed with.
     var currentComposable: Composable? { get set }
 }
 
+// MARK: - Convenience API for Composers using UIKit `UIViewController`s
 
+public extension Composer where ContainerViewController: UIViewController {
 
-public extension ComposerType where Container: UIViewController {
     public func presentComposable(composable: Composable, animated: Bool = false) {
         currentComposable = composable
-        container.presentViewController(composable.viewController, animated: animated, completion: nil)
+        containerViewController.presentViewController(composable.viewController, animated: animated, completion: nil)
     }
 
     public func dismissComposableAnimated(animated: Bool = false) {
-        container.dismissViewControllerAnimated(animated, completion: nil)
+        containerViewController.dismissViewControllerAnimated(animated, completion: nil)
     }
 }
 
-public extension ComposerType where Container: UINavigationController {
+public extension Composer where ContainerViewController: UINavigationController {
+
     public func pushComposable(composable: Composable, animated: Bool = false) {
         currentComposable = composable
-        container.pushViewController(composable.viewController, animated: animated)
+        containerViewController.pushViewController(composable.viewController, animated: animated)
     }
 
     public func popComposable(animated: Bool = false) {
-        container.popViewControllerAnimated(animated)
-        //        currentComposable = container.viewControllers.last
+        containerViewController.popViewControllerAnimated(animated)
     }
 
     public func setComposables(composables: [Composable], animated: Bool = false) {
         currentComposable = composables.last
-        container.setViewControllers(composables.map { $0.viewController }, animated: animated)
-    }
-}
-
-public extension ComposerType where Container: ContainerViewController {
-    public func showComposable(composable: Composable) {
-        currentComposable = composable
-        container.showViewController(composable.viewController)
+        containerViewController.setViewControllers(composables.map { $0.viewController }, animated: animated)
     }
 }

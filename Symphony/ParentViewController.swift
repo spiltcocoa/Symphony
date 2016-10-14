@@ -1,21 +1,15 @@
 //
-//  Container.swift
+//  ParentViewController.swift
 //  Symphony
 //
 //  Created by Jeff Boek on 1/7/16.
 //  Copyright © 2016 Spilt Cocoa. All rights reserved.
 //
 
-public protocol ContainerType { }
-
-extension UINavigationController: ContainerType {}
-extension ContainerViewController: ContainerType {}
-
-
 // A completely unadorned viewController container.
 // i.e. no TabBar, NavigationBar, etc.. It just hot swaps children.
 // Easy to swap other ViewControllers into with state changes.
-public class ContainerViewController: UIViewController {
+public class ParentViewController: UIViewController {
 
     // MARK: - Properties
     private var childViewController: UIViewController?
@@ -43,5 +37,12 @@ public class ContainerViewController: UIViewController {
         view.addSubview(viewController.view)
         viewController.didMoveToParentViewController(self)
         setNeedsStatusBarAppearanceUpdate()
+    }
+}
+
+public extension Composer where ContainerViewController: ParentViewController {
+    public func showComposable(composable: Composable) {
+        currentComposable = composable
+        containerViewController.showViewController(composable.viewController)
     }
 }

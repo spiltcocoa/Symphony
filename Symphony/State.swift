@@ -11,7 +11,7 @@ public protocol StateType {
 }
 
 public protocol Stateable: class {
-    typealias State: StateType
+    associatedtype State: StateType
     var currentState: State { get set }
 
     func didTransitionFromState(state: State, toState: State)
