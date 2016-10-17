@@ -38,37 +38,37 @@ class UIComposer: XCTestCase {
     }
 
     func test_whenPresents_isPresenting() {
-        let composable = BasicComposable()
+        let presentedComposable = BasicComposable()
 
-        composer.presentComposable(composable)
+        composer.presentComposable(presentedComposable)
 
         let currentlyPresented = composer.containerViewController.presentedViewController
-        XCTAssert(currentlyPresented === composable.viewController)
+        XCTAssert(currentlyPresented === presentedComposable.viewController)
     }
 
     func test_whenPresents_presentedIsRetained() {
-        weak var weakComposable: BasicComposable?
+        weak var weakPresentedComposable: BasicComposable?
 
         autoreleasepool {
-            let composable = BasicComposable()
-            weakComposable = composable
-            composer.presentComposable(composable)
+            let presentedComposable = BasicComposable()
+            weakPresentedComposable = presentedComposable
+            composer.presentComposable(presentedComposable)
         }
 
-        XCTAssertNotNil(weakComposable)
+        XCTAssertNotNil(weakPresentedComposable)
     }
 
     func test_whenDismisses_presentedIsReleased() {
-        weak var weakComposable: BasicComposable?
+        weak var weakPresentedComposable: BasicComposable?
 
         autoreleasepool {
-            let composable = BasicComposable()
-            weakComposable = composable
-            composer.presentComposable(composable)
+            let presentedComposable = BasicComposable()
+            weakPresentedComposable = presentedComposable
+            composer.presentComposable(presentedComposable)
         }
         composer.dismissComposableAnimated()
 
-        XCTAssertNil(weakComposable)
+        XCTAssertNil(weakPresentedComposable)
     }
 }
 
@@ -91,80 +91,80 @@ class ParentComposer: XCTestCase {
     }
 
     func test_whenShows_isShowing() {
-        let composable = BasicComposable()
+        let shownComposable = BasicComposable()
 
-        composer.showComposable(composable)
+        composer.showComposable(shownComposable)
 
         let currentlyShown = composer.containerViewController.childViewController
-        XCTAssert(currentlyShown === composable.viewController)
+        XCTAssert(currentlyShown === shownComposable.viewController)
     }
 
-    func test_whenShows_childIsRetained() {
-        weak var weakComposable: BasicComposable?
+    func test_whenShows_shownIsRetained() {
+        weak var weakShownComposable: BasicComposable?
 
         autoreleasepool {
-            let composable = BasicComposable()
-            weakComposable = composable
-            composer.showComposable(composable)
+            let shownComposable = BasicComposable()
+            weakShownComposable = shownComposable
+            composer.showComposable(shownComposable)
         }
 
-        XCTAssertNotNil(weakComposable)
+        XCTAssertNotNil(weakShownComposable)
     }
 
-    func test_whenShows_oldChildIsReleased() {
-        weak var weakOldComposable: BasicComposable?
-        weak var weakNewComposable: BasicComposable?
+    func test_whenShows_oldShownIsReleased() {
+        weak var weakOldShownComposable: BasicComposable?
+        weak var weakNewShownComposable: BasicComposable?
 
         autoreleasepool {
-            let oldComposable = BasicComposable()
-            let newComposable = BasicComposable()
-            weakOldComposable = oldComposable
-            weakNewComposable = newComposable
-            composer.showComposable(oldComposable)
-            composer.showComposable(newComposable)
+            let oldShownComposable = BasicComposable()
+            let newShownComposable = BasicComposable()
+            weakOldShownComposable = oldShownComposable
+            weakNewShownComposable = newShownComposable
+            composer.showComposable(oldShownComposable)
+            composer.showComposable(newShownComposable)
         }
 
-        XCTAssertNil(weakOldComposable)
-        XCTAssertNotNil(weakNewComposable)
+        XCTAssertNil(weakOldShownComposable)
+        XCTAssertNotNil(weakNewShownComposable)
     }
 
 
-    func test_whenPresents_childAndPresentedAreBothRetained() {
-        weak var weakChildComposable: BasicComposable?
+    func test_whenPresents_shownAndPresentedAreBothRetained() {
+        weak var weakShownComposable: BasicComposable?
         weak var weakPresentedComposable: BasicComposable?
 
         autoreleasepool {
-            let childComposable = BasicComposable()
+            let shownComposable = BasicComposable()
             let presentedComposable = BasicComposable()
-            weakChildComposable = childComposable
+            weakShownComposable = shownComposable
             weakPresentedComposable = presentedComposable
-            composer.showComposable(childComposable)
+            composer.showComposable(shownComposable)
             composer.presentComposable(presentedComposable)
         }
 
-        XCTAssertNotNil(weakChildComposable)
+        XCTAssertNotNil(weakShownComposable)
         XCTAssertNotNil(weakPresentedComposable)
     }
 
-    func test_whenShowingWhilePresenting_newChildAndPresentedAreRetained_oldChildIsReleased() {
-        weak var weakOldChildComposable: BasicComposable?
-        weak var weakNewChildComposable: BasicComposable?
+    func test_whenShowingWhilePresenting_newShownAndPresentedAreRetained_oldShownIsReleased() {
+        weak var weakOldShownComposable: BasicComposable?
+        weak var weakNewShownComposable: BasicComposable?
         weak var weakPresentedComposable: BasicComposable?
 
         autoreleasepool {
-            let oldChildComposable = BasicComposable()
-            let newChildComposable = BasicComposable()
+            let oldShownComposable = BasicComposable()
+            let newShownComposable = BasicComposable()
             let presentedComposable = BasicComposable()
-            weakOldChildComposable = oldChildComposable
-            weakNewChildComposable = newChildComposable
+            weakOldShownComposable = oldShownComposable
+            weakNewShownComposable = newShownComposable
             weakPresentedComposable = presentedComposable
-            composer.showComposable(oldChildComposable)
+            composer.showComposable(oldShownComposable)
             composer.presentComposable(presentedComposable)
-            composer.showComposable(newChildComposable)
+            composer.showComposable(newShownComposable)
         }
 
-        XCTAssertNil(weakOldChildComposable)
-        XCTAssertNotNil(weakNewChildComposable)
+        XCTAssertNil(weakOldShownComposable)
+        XCTAssertNotNil(weakNewShownComposable)
         XCTAssertNotNil(weakPresentedComposable)
     }
 }
@@ -189,206 +189,206 @@ class NavigationComposerTests: XCTestCase {
     }
 
     func test_whenPushes_isShowingPushed() {
-        let composable = BasicComposable()
+        let pushedComposable = BasicComposable()
 
-        composer.pushComposable(composable)
+        composer.pushComposable(pushedComposable)
 
         let currentlyShown = composer.containerViewController.viewControllers.last
-        XCTAssert(currentlyShown === composable.viewController)
+        XCTAssert(currentlyShown === pushedComposable.viewController)
     }
 
-    func test_whenPushes_childIsRetained() {
-        weak var weakComposable: BasicComposable?
+    func test_whenPushes_pushedIsRetained() {
+        weak var weakPushedComposable: BasicComposable?
 
         autoreleasepool {
-            let composable = BasicComposable()
-            weakComposable = composable
-            composer.pushComposable(composable)
+            let pushedComposable = BasicComposable()
+            weakPushedComposable = pushedComposable
+            composer.pushComposable(pushedComposable)
         }
 
-        XCTAssertNotNil(weakComposable)
+        XCTAssertNotNil(weakPushedComposable)
     }
 
-    func test_whenPushesMultiple_allChildrenAreRetained() {
-        weak var weakFirstComposable: BasicComposable?
-        weak var weakSecondComposable: BasicComposable?
-        weak var weakThirdComposable: BasicComposable?
+    func test_whenPushesMultiple_allPushedAreRetained() {
+        weak var weakFirstPushedComposable: BasicComposable?
+        weak var weakSecondPushedComposable: BasicComposable?
+        weak var weakThirdPushedComposable: BasicComposable?
 
         autoreleasepool {
-            let firstComposable = BasicComposable()
-            let secondComposable = BasicComposable()
-            let thirdComposable = BasicComposable()
-            weakFirstComposable = firstComposable
-            weakSecondComposable = secondComposable
-            weakThirdComposable = thirdComposable
-            composer.pushComposable(firstComposable)
-            composer.pushComposable(secondComposable)
-            composer.pushComposable(thirdComposable)
+            let firstPushedComposable = BasicComposable()
+            let secondPushedComposable = BasicComposable()
+            let thirdPushedComposable = BasicComposable()
+            weakFirstPushedComposable = firstPushedComposable
+            weakSecondPushedComposable = secondPushedComposable
+            weakThirdPushedComposable = thirdPushedComposable
+            composer.pushComposable(firstPushedComposable)
+            composer.pushComposable(secondPushedComposable)
+            composer.pushComposable(thirdPushedComposable)
         }
 
-        XCTAssertNotNil(weakFirstComposable)
-        XCTAssertNotNil(weakSecondComposable)
-        XCTAssertNotNil(weakThirdComposable)
+        XCTAssertNotNil(weakFirstPushedComposable)
+        XCTAssertNotNil(weakSecondPushedComposable)
+        XCTAssertNotNil(weakThirdPushedComposable)
     }
 
     func test_whenPresents_childrenAndPresentedAreBothRetained() {
-        weak var weakChildComposable: BasicComposable?
+        weak var weakShownComposable: BasicComposable?
         weak var weakPresentedComposable: BasicComposable?
 
         autoreleasepool {
-            let childComposable = BasicComposable()
+            let shownComposable = BasicComposable()
             let presentedComposable = BasicComposable()
-            weakChildComposable = childComposable
+            weakShownComposable = shownComposable
             weakPresentedComposable = presentedComposable
-            composer.pushComposable(childComposable)
+            composer.pushComposable(shownComposable)
             composer.presentComposable(presentedComposable)
         }
 
-        XCTAssertNotNil(weakChildComposable)
+        XCTAssertNotNil(weakShownComposable)
         XCTAssertNotNil(weakPresentedComposable)
     }
 
     func test_whenPushesWhilePresenting_allChildrenAndPresentedAreRetained() {
-        weak var weakFirstChildComposable: BasicComposable?
-        weak var weakSecondChildComposable: BasicComposable?
+        weak var weakFirstShownComposable: BasicComposable?
+        weak var weakSecondShownComposable: BasicComposable?
         weak var weakPresentedComposable: BasicComposable?
 
         autoreleasepool {
-            let firstChildComposable = BasicComposable()
-            let secondChildComposable = BasicComposable()
+            let firstShownComposable = BasicComposable()
+            let secondShownComposable = BasicComposable()
             let presentedComposable = BasicComposable()
-            weakFirstChildComposable = firstChildComposable
-            weakSecondChildComposable = secondChildComposable
+            weakFirstShownComposable = firstShownComposable
+            weakSecondShownComposable = secondShownComposable
             weakPresentedComposable = presentedComposable
-            composer.pushComposable(firstChildComposable)
+            composer.pushComposable(firstShownComposable)
             composer.presentComposable(presentedComposable)
-            composer.pushComposable(secondChildComposable)
+            composer.pushComposable(secondShownComposable)
         }
 
-        XCTAssertNotNil(weakFirstChildComposable)
-        XCTAssertNotNil(weakSecondChildComposable)
+        XCTAssertNotNil(weakFirstShownComposable)
+        XCTAssertNotNil(weakSecondShownComposable)
         XCTAssertNotNil(weakPresentedComposable)
     }
 
     func test_whenPops_poppedIsReleased_allRemainingAreRetained() {
-        weak var weakFirstComposable: BasicComposable?
-        weak var weakSecondComposable: BasicComposable?
-        weak var weakThirdComposable: BasicComposable?
+        weak var weakFirstPushedComposable: BasicComposable?
+        weak var weakSecondPushedComposable: BasicComposable?
+        weak var weakThirdPushedComposable: BasicComposable?
 
         autoreleasepool {
-            let firstComposable = BasicComposable()
-            let secondComposable = BasicComposable()
-            let thirdComposable = BasicComposable()
-            weakFirstComposable = firstComposable
-            weakSecondComposable = secondComposable
-            weakThirdComposable = thirdComposable
-            composer.pushComposable(firstComposable)
-            composer.pushComposable(secondComposable)
-            composer.pushComposable(thirdComposable)
+            let firstPushedComposable = BasicComposable()
+            let secondPushedComposable = BasicComposable()
+            let thirdPushedComposable = BasicComposable()
+            weakFirstPushedComposable = firstPushedComposable
+            weakSecondPushedComposable = secondPushedComposable
+            weakThirdPushedComposable = thirdPushedComposable
+            composer.pushComposable(firstPushedComposable)
+            composer.pushComposable(secondPushedComposable)
+            composer.pushComposable(thirdPushedComposable)
             composer.popComposable()
         }
 
-        XCTAssertNotNil(weakFirstComposable)
-        XCTAssertNotNil(weakSecondComposable)
-        XCTAssertNil(weakThirdComposable)
+        XCTAssertNotNil(weakFirstPushedComposable)
+        XCTAssertNotNil(weakSecondPushedComposable)
+        XCTAssertNil(weakThirdPushedComposable)
     }
 
     func test_whenPopsWhilePresenting_poppedIsReleased_allRemainingAreRetained() {
-        weak var weakFirstComposable: BasicComposable?
-        weak var weakSecondComposable: BasicComposable?
-        weak var weakThirdComposable: BasicComposable?
+        weak var weakFirstPushedComposable: BasicComposable?
+        weak var weakSecondPushedComposable: BasicComposable?
+        weak var weakThirdPushedComposable: BasicComposable?
         weak var weakPresentedComposable: BasicComposable?
 
         autoreleasepool {
-            let firstComposable = BasicComposable()
-            let secondComposable = BasicComposable()
-            let thirdComposable = BasicComposable()
+            let firstPushedComposable = BasicComposable()
+            let secondPushedComposable = BasicComposable()
+            let thirdPushedComposable = BasicComposable()
             let presentedComposable = BasicComposable()
-            weakFirstComposable = firstComposable
-            weakSecondComposable = secondComposable
-            weakThirdComposable = thirdComposable
+            weakFirstPushedComposable = firstPushedComposable
+            weakSecondPushedComposable = secondPushedComposable
+            weakThirdPushedComposable = thirdPushedComposable
             weakPresentedComposable = presentedComposable
-            composer.pushComposable(firstComposable)
-            composer.pushComposable(secondComposable)
-            composer.pushComposable(thirdComposable)
+            composer.pushComposable(firstPushedComposable)
+            composer.pushComposable(secondPushedComposable)
+            composer.pushComposable(thirdPushedComposable)
             composer.presentComposable(presentedComposable)
             composer.popComposable()
         }
 
-        XCTAssertNotNil(weakFirstComposable)
-        XCTAssertNotNil(weakSecondComposable)
+        XCTAssertNotNil(weakFirstPushedComposable)
+        XCTAssertNotNil(weakSecondPushedComposable)
         XCTAssertNotNil(weakPresentedComposable)
-        XCTAssertNil(weakThirdComposable)
+        XCTAssertNil(weakThirdPushedComposable)
     }
 
-    func test_whenSetting_newChildrenAreRetained() {
-        weak var weakFirstComposable: BasicComposable?
-        weak var weakSecondComposable: BasicComposable?
+    func test_whenSetting_newSetAreRetained() {
+        weak var weakFirstSetComposable: BasicComposable?
+        weak var weakSecondSetComposable: BasicComposable?
 
         autoreleasepool {
-            let firstComposable = BasicComposable()
-            let secondComposable = BasicComposable()
-            weakFirstComposable = firstComposable
-            weakSecondComposable = secondComposable
-            composer.setComposables([firstComposable, secondComposable])
+            let firstSetComposable = BasicComposable()
+            let secondSetComposable = BasicComposable()
+            weakFirstSetComposable = firstSetComposable
+            weakSecondSetComposable = secondSetComposable
+            composer.setComposables([firstSetComposable, secondSetComposable])
         }
 
-        XCTAssertNotNil(weakFirstComposable)
-        XCTAssertNotNil(weakSecondComposable)
+        XCTAssertNotNil(weakFirstSetComposable)
+        XCTAssertNotNil(weakSecondSetComposable)
     }
 
-    func test_whenSetting_oldAreReleased_newAreRetained() {
-        weak var weakOldFirstComposable: BasicComposable?
-        weak var weakOldSecondComposable: BasicComposable?
-        weak var weakNewFirstComposable: BasicComposable?
-        weak var weakNewSecondComposable: BasicComposable?
+    func test_whenSetting_oldSetAreReleased_newSetAreRetained() {
+        weak var weakOldFirstSetComposable: BasicComposable?
+        weak var weakOldSecondSetComposable: BasicComposable?
+        weak var weakNewFirstSetComposable: BasicComposable?
+        weak var weakNewSecondSetComposable: BasicComposable?
 
         autoreleasepool {
-            let oldFirstComposable = BasicComposable()
-            let oldSecondComposable = BasicComposable()
-            let newFirstComposable = BasicComposable()
-            let newSecondComposable = BasicComposable()
-            weakOldFirstComposable = oldFirstComposable
-            weakOldSecondComposable = oldSecondComposable
-            weakNewFirstComposable = newFirstComposable
-            weakNewSecondComposable = newSecondComposable
-            composer.setComposables([oldFirstComposable, oldSecondComposable])
-            composer.setComposables([newFirstComposable, newSecondComposable])
+            let oldFirstSetComposable = BasicComposable()
+            let oldSecondSetComposable = BasicComposable()
+            let newFirstSetComposable = BasicComposable()
+            let newSecondSetComposable = BasicComposable()
+            weakOldFirstSetComposable = oldFirstSetComposable
+            weakOldSecondSetComposable = oldSecondSetComposable
+            weakNewFirstSetComposable = newFirstSetComposable
+            weakNewSecondSetComposable = newSecondSetComposable
+            composer.setComposables([oldFirstSetComposable, oldSecondSetComposable])
+            composer.setComposables([newFirstSetComposable, newSecondSetComposable])
         }
 
-        XCTAssertNil(weakOldFirstComposable)
-        XCTAssertNil(weakOldSecondComposable)
-        XCTAssertNotNil(weakNewFirstComposable)
-        XCTAssertNotNil(weakNewSecondComposable)
+        XCTAssertNil(weakOldFirstSetComposable)
+        XCTAssertNil(weakOldSecondSetComposable)
+        XCTAssertNotNil(weakNewFirstSetComposable)
+        XCTAssertNotNil(weakNewSecondSetComposable)
     }
 
-    func test_whenSettingWhilePresenting_oldAreReleased_newAndPresentedAreRetained() {
-        weak var weakOldFirstComposable: BasicComposable?
-        weak var weakOldSecondComposable: BasicComposable?
-        weak var weakNewFirstComposable: BasicComposable?
-        weak var weakNewSecondComposable: BasicComposable?
+    func test_whenSettingWhilePresenting_oldSetAreReleased_newSetAndPresentedAreRetained() {
+        weak var weakOldFirstSetComposable: BasicComposable?
+        weak var weakOldSecondSetComposable: BasicComposable?
+        weak var weakNewFirstSetComposable: BasicComposable?
+        weak var weakNewSecondSetComposable: BasicComposable?
         weak var weakPresentedComposable: BasicComposable?
 
         autoreleasepool {
-            let oldFirstComposable = BasicComposable()
-            let oldSecondComposable = BasicComposable()
-            let newFirstComposable = BasicComposable()
-            let newSecondComposable = BasicComposable()
+            let oldFirstSetComposable = BasicComposable()
+            let oldSecondSetComposable = BasicComposable()
+            let newFirstSetComposable = BasicComposable()
+            let newSecondSetComposable = BasicComposable()
             let presentedComposable = BasicComposable()
-            weakOldFirstComposable = oldFirstComposable
-            weakOldSecondComposable = oldSecondComposable
-            weakNewFirstComposable = newFirstComposable
-            weakNewSecondComposable = newSecondComposable
+            weakOldFirstSetComposable = oldFirstSetComposable
+            weakOldSecondSetComposable = oldSecondSetComposable
+            weakNewFirstSetComposable = newFirstSetComposable
+            weakNewSecondSetComposable = newSecondSetComposable
             weakPresentedComposable = presentedComposable
-            composer.setComposables([oldFirstComposable, oldSecondComposable])
+            composer.setComposables([oldFirstSetComposable, oldSecondSetComposable])
             composer.presentComposable(presentedComposable)
-            composer.setComposables([newFirstComposable, newSecondComposable])
+            composer.setComposables([newFirstSetComposable, newSecondSetComposable])
         }
 
-        XCTAssertNil(weakOldFirstComposable)
-        XCTAssertNil(weakOldSecondComposable)
-        XCTAssertNotNil(weakNewFirstComposable)
-        XCTAssertNotNil(weakNewSecondComposable)
+        XCTAssertNil(weakOldFirstSetComposable)
+        XCTAssertNil(weakOldSecondSetComposable)
+        XCTAssertNotNil(weakNewFirstSetComposable)
+        XCTAssertNotNil(weakNewSecondSetComposable)
         XCTAssertNotNil(weakPresentedComposable)
     }
 }
