@@ -12,7 +12,7 @@
 public class ParentViewController: UIViewController {
 
     // MARK: - Properties
-    private var childViewController: UIViewController?
+    public private(set) var childViewController: UIViewController?
 
     // MARK: - Init
     public convenience init() {
@@ -42,7 +42,10 @@ public class ParentViewController: UIViewController {
 
 public extension Composer where ContainerViewController: ParentViewController {
     public func showComposable(composable: Composable) {
-        currentComposable = composable
+        currentComposables = currentComposables.filter {
+            $0.viewController === containerViewController.presentedViewController
+        }
+        currentComposables.append(composable)
         containerViewController.showViewController(composable.viewController)
     }
 }

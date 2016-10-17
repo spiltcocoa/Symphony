@@ -22,7 +22,7 @@ public protocol Composer: class {
     /// A reference to the currently presented composable.
     /// This is generally only necissary for memory management,
     /// and shouldn't need to be messed with.
-    var currentComposable: Composable? { get set }
+    var currentComposables: [Composable] { get set }
 }
 
 // MARK: - Convenience API for Composers using UIKit `UIViewController`s
@@ -30,11 +30,13 @@ public protocol Composer: class {
 public extension Composer where ContainerViewController: UIViewController {
 
     public func presentComposable(composable: Composable, animated: Bool = false) {
-        currentComposable = composable
+        currentComposables.append(composable)
         containerViewController.presentViewController(composable.viewController, animated: animated, completion: nil)
     }
 
     public func dismissComposableAnimated(animated: Bool = false) {
+        guard let presentedVC = containerViewController.presentedViewController else { return }
+        currentComposables = currentComposables.filter { $0.viewController !== presentedVC }
         containerViewController.dismissViewControllerAnimated(animated, completion: nil)
     }
 }
@@ -42,16 +44,21 @@ public extension Composer where ContainerViewController: UIViewController {
 public extension Composer where ContainerViewController: UINavigationController {
 
     public func pushComposable(composable: Composable, animated: Bool = false) {
-        currentComposable = composable
+        currentComposables.append(composable)
         containerViewController.pushViewController(composable.viewController, animated: animated)
     }
 
     public func popComposable(animated: Bool = false) {
+        guard let poppingVC = containerViewController.viewControllers.last else { return }
+        currentComposables = currentComposables.filter { $0.viewController !== poppingVC }
         containerViewController.popViewControllerAnimated(animated)
     }
 
     public func setComposables(composables: [Composable], animated: Bool = false) {
-        currentComposable = composables.last
+        currentComposables = currentComposables.filter {
+            $0.viewController === containerViewController.presentedViewController
+        }
+        currentComposables += composables
         containerViewController.setViewControllers(composables.map { $0.viewController }, animated: animated)
     }
 }
