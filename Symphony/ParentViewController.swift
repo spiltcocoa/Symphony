@@ -9,7 +9,7 @@
 // A completely unadorned viewController container.
 // i.e. no TabBar, NavigationBar, etc.. It just hot swaps children.
 // Easy to swap other ViewControllers into with state changes.
-public class ParentViewController: UIViewController {
+public final class ParentViewController: UIViewController {
 
     // MARK: - Properties
     public fileprivate(set) var displayedViewController: UIViewController?
@@ -24,7 +24,7 @@ public class ParentViewController: UIViewController {
         return displayedViewController
     }
 
-    public func dispaly(viewController: UIViewController) {
+    public func display(viewController: UIViewController) {
         if let existingVC = displayedViewController {
             existingVC.willMove(toParentViewController: nil)
             existingVC.view.removeFromSuperview()
@@ -46,6 +46,6 @@ public extension Composer where ContainerViewController: ParentViewController {
             $0.viewController === containerViewController.presentedViewController
         }
         currentComposables.append(composable)
-        containerViewController.show(viewController: composable.viewController)
+        containerViewController.display(viewController: composable.viewController)
     }
 }
