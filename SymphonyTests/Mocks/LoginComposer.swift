@@ -16,11 +16,11 @@ class LoginComposer: Composer, Composable {
 }
 
 extension LoginComposer: Stateable {
-    enum State: StateType {
+    enum State: StateProtocol {
         case main
         case finished
 
-        func canTransitionToState(_ state: State) -> Bool {
+        func canTransition(to state: State) -> Bool {
             switch(self, state) {
             case(.main, .finished): return true
             default: return false
@@ -28,13 +28,13 @@ extension LoginComposer: Stateable {
         }
     }
 
-    func didTransitionFromState(_ state: State, toState: State) {
+    func didTransition(from oldState: State, to newState: State) {
         eventListener?(.finished)
     }
 }
 
 extension LoginComposer: Eventable {
-    enum Event: EventType {
+    enum Event: EventProtocol {
         case finished
     }
 }

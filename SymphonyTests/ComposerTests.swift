@@ -40,7 +40,7 @@ class UIComposer: XCTestCase {
     func test_whenPresents_isPresenting() {
         let presentedComposable = BasicComposable()
 
-        composer.presentComposable(presentedComposable)
+        composer.present(presentedComposable)
 
         let currentlyPresented = composer.containerViewController.presentedViewController
         XCTAssert(currentlyPresented === presentedComposable.viewController)
@@ -52,7 +52,7 @@ class UIComposer: XCTestCase {
         autoreleasepool {
             let presentedComposable = BasicComposable()
             weakPresentedComposable = presentedComposable
-            composer.presentComposable(presentedComposable)
+            composer.present(presentedComposable)
         }
 
         XCTAssertNotNil(weakPresentedComposable)
@@ -64,9 +64,9 @@ class UIComposer: XCTestCase {
         autoreleasepool {
             let presentedComposable = BasicComposable()
             weakPresentedComposable = presentedComposable
-            composer.presentComposable(presentedComposable)
+            composer.present(presentedComposable)
         }
-        composer.dismissComposableAnimated()
+        composer.dismissComposable()
 
         XCTAssertNil(weakPresentedComposable)
     }
@@ -93,9 +93,9 @@ class ParentComposer: XCTestCase {
     func test_whenShows_isShowing() {
         let shownComposable = BasicComposable()
 
-        composer.showComposable(shownComposable)
+        composer.display(shownComposable)
 
-        let currentlyShown = composer.containerViewController.childViewController
+        let currentlyShown = composer.containerViewController.displayedViewController
         XCTAssert(currentlyShown === shownComposable.viewController)
     }
 
@@ -105,7 +105,7 @@ class ParentComposer: XCTestCase {
         autoreleasepool {
             let shownComposable = BasicComposable()
             weakShownComposable = shownComposable
-            composer.showComposable(shownComposable)
+            composer.display(shownComposable)
         }
 
         XCTAssertNotNil(weakShownComposable)
@@ -120,8 +120,8 @@ class ParentComposer: XCTestCase {
             let newShownComposable = BasicComposable()
             weakOldShownComposable = oldShownComposable
             weakNewShownComposable = newShownComposable
-            composer.showComposable(oldShownComposable)
-            composer.showComposable(newShownComposable)
+            composer.display(oldShownComposable)
+            composer.display(newShownComposable)
         }
 
         XCTAssertNil(weakOldShownComposable)
@@ -138,8 +138,8 @@ class ParentComposer: XCTestCase {
             let presentedComposable = BasicComposable()
             weakShownComposable = shownComposable
             weakPresentedComposable = presentedComposable
-            composer.showComposable(shownComposable)
-            composer.presentComposable(presentedComposable)
+            composer.display(shownComposable)
+            composer.present(presentedComposable)
         }
 
         XCTAssertNotNil(weakShownComposable)
@@ -158,9 +158,9 @@ class ParentComposer: XCTestCase {
             weakOldShownComposable = oldShownComposable
             weakNewShownComposable = newShownComposable
             weakPresentedComposable = presentedComposable
-            composer.showComposable(oldShownComposable)
-            composer.presentComposable(presentedComposable)
-            composer.showComposable(newShownComposable)
+            composer.display(oldShownComposable)
+            composer.present(presentedComposable)
+            composer.display(newShownComposable)
         }
 
         XCTAssertNil(weakOldShownComposable)
@@ -191,7 +191,7 @@ class NavigationComposerTests: XCTestCase {
     func test_whenPushes_isShowingPushed() {
         let pushedComposable = BasicComposable()
 
-        composer.pushComposable(pushedComposable)
+        composer.push(pushedComposable)
 
         let currentlyShown = composer.containerViewController.viewControllers.last
         XCTAssert(currentlyShown === pushedComposable.viewController)
@@ -203,7 +203,7 @@ class NavigationComposerTests: XCTestCase {
         autoreleasepool {
             let pushedComposable = BasicComposable()
             weakPushedComposable = pushedComposable
-            composer.pushComposable(pushedComposable)
+            composer.push(pushedComposable)
         }
 
         XCTAssertNotNil(weakPushedComposable)
@@ -221,9 +221,9 @@ class NavigationComposerTests: XCTestCase {
             weakFirstPushedComposable = firstPushedComposable
             weakSecondPushedComposable = secondPushedComposable
             weakThirdPushedComposable = thirdPushedComposable
-            composer.pushComposable(firstPushedComposable)
-            composer.pushComposable(secondPushedComposable)
-            composer.pushComposable(thirdPushedComposable)
+            composer.push(firstPushedComposable)
+            composer.push(secondPushedComposable)
+            composer.push(thirdPushedComposable)
         }
 
         XCTAssertNotNil(weakFirstPushedComposable)
@@ -240,8 +240,8 @@ class NavigationComposerTests: XCTestCase {
             let presentedComposable = BasicComposable()
             weakShownComposable = shownComposable
             weakPresentedComposable = presentedComposable
-            composer.pushComposable(shownComposable)
-            composer.presentComposable(presentedComposable)
+            composer.push(shownComposable)
+            composer.present(presentedComposable)
         }
 
         XCTAssertNotNil(weakShownComposable)
@@ -260,9 +260,9 @@ class NavigationComposerTests: XCTestCase {
             weakFirstShownComposable = firstShownComposable
             weakSecondShownComposable = secondShownComposable
             weakPresentedComposable = presentedComposable
-            composer.pushComposable(firstShownComposable)
-            composer.presentComposable(presentedComposable)
-            composer.pushComposable(secondShownComposable)
+            composer.push(firstShownComposable)
+            composer.present(presentedComposable)
+            composer.push(secondShownComposable)
         }
 
         XCTAssertNotNil(weakFirstShownComposable)
@@ -282,9 +282,9 @@ class NavigationComposerTests: XCTestCase {
             weakFirstPushedComposable = firstPushedComposable
             weakSecondPushedComposable = secondPushedComposable
             weakThirdPushedComposable = thirdPushedComposable
-            composer.pushComposable(firstPushedComposable)
-            composer.pushComposable(secondPushedComposable)
-            composer.pushComposable(thirdPushedComposable)
+            composer.push(firstPushedComposable)
+            composer.push(secondPushedComposable)
+            composer.push(thirdPushedComposable)
             composer.popComposable()
         }
 
@@ -308,10 +308,10 @@ class NavigationComposerTests: XCTestCase {
             weakSecondPushedComposable = secondPushedComposable
             weakThirdPushedComposable = thirdPushedComposable
             weakPresentedComposable = presentedComposable
-            composer.pushComposable(firstPushedComposable)
-            composer.pushComposable(secondPushedComposable)
-            composer.pushComposable(thirdPushedComposable)
-            composer.presentComposable(presentedComposable)
+            composer.push(firstPushedComposable)
+            composer.push(secondPushedComposable)
+            composer.push(thirdPushedComposable)
+            composer.present(presentedComposable)
             composer.popComposable()
         }
 
@@ -330,7 +330,7 @@ class NavigationComposerTests: XCTestCase {
             let secondSetComposable = BasicComposable()
             weakFirstSetComposable = firstSetComposable
             weakSecondSetComposable = secondSetComposable
-            composer.setComposables([firstSetComposable, secondSetComposable])
+            composer.set([firstSetComposable, secondSetComposable])
         }
 
         XCTAssertNotNil(weakFirstSetComposable)
@@ -352,8 +352,8 @@ class NavigationComposerTests: XCTestCase {
             weakOldSecondSetComposable = oldSecondSetComposable
             weakNewFirstSetComposable = newFirstSetComposable
             weakNewSecondSetComposable = newSecondSetComposable
-            composer.setComposables([oldFirstSetComposable, oldSecondSetComposable])
-            composer.setComposables([newFirstSetComposable, newSecondSetComposable])
+            composer.set([oldFirstSetComposable, oldSecondSetComposable])
+            composer.set([newFirstSetComposable, newSecondSetComposable])
         }
 
         XCTAssertNil(weakOldFirstSetComposable)
@@ -380,9 +380,9 @@ class NavigationComposerTests: XCTestCase {
             weakNewFirstSetComposable = newFirstSetComposable
             weakNewSecondSetComposable = newSecondSetComposable
             weakPresentedComposable = presentedComposable
-            composer.setComposables([oldFirstSetComposable, oldSecondSetComposable])
-            composer.presentComposable(presentedComposable)
-            composer.setComposables([newFirstSetComposable, newSecondSetComposable])
+            composer.set([oldFirstSetComposable, oldSecondSetComposable])
+            composer.present(presentedComposable)
+            composer.set([newFirstSetComposable, newSecondSetComposable])
         }
 
         XCTAssertNil(weakOldFirstSetComposable)

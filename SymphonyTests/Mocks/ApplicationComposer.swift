@@ -16,7 +16,7 @@ class ApplicationComposer: Composer {
     var receivedEvent = false
 
     func start() {
-        showComposable(loginComposable())
+        display(loginComposable())
     }
 
     fileprivate func loginComposable() -> Composable {
@@ -37,7 +37,7 @@ class ApplicationComposer: Composer {
         receivedEvent = true
         
         switch event {
-        case .finished: transitionToState(.main)
+        case .finished: transition(to: .main)
         }
     }
 
@@ -47,13 +47,13 @@ class ApplicationComposer: Composer {
 }
 
 extension ApplicationComposer: Stateable {
-    enum State: StateType {
+    enum State: StateProtocol {
         case login
         case loggedIn
         case main
         case logout
 
-        func canTransitionToState(_ state: State) -> Bool {
+        func canTransition(to state: State) -> Bool {
             switch(self, state) {
             case(.login, .main): return true
             case(.login, .logout): return false
@@ -62,7 +62,7 @@ extension ApplicationComposer: Stateable {
         }
     }
 
-    func didTransitionFromState(_ state: State, toState: State) {
+    func didTransition(from oldState: State, to newState: State) {
         receivedStateMessage = true
     }
 }

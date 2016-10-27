@@ -15,23 +15,23 @@ class MainComposer: Composer {
 }
 
 extension MainComposer: Stateable {
-    enum State: StateType {
+    enum State: StateProtocol {
         case none
 
-        func canTransitionToState(_ state: State) -> Bool {
+        func canTransition(to state: State) -> Bool {
             switch(self, state) {
             case(.none, .none): return true
             }
         }
     }
 
-    func didTransitionFromState(_ state: State, toState: State) {
+    func didTransition(from oldState: State, to newState: State) {
         
     }
 }
 
-extension MainComposer: EventType {
-    enum Event: EventType {
+extension MainComposer: EventProtocol {
+    enum Event: EventProtocol {
         case logout
     }
 }
