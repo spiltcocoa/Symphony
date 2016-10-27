@@ -48,7 +48,7 @@ public extension Composer where ContainerViewController: UINavigationController 
         containerViewController.pushViewController(composable.viewController, animated: animated)
     }
 
-    public func popComposable(_ animated: Bool = false) {
+    public func popComposable(animated: Bool = false) {
         guard let poppingVC = containerViewController.viewControllers.last else { return }
         currentComposables = currentComposables.filter { $0.viewController !== poppingVC }
         containerViewController.popViewController(animated: animated)
