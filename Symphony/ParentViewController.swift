@@ -12,7 +12,7 @@
 open class ParentViewController: UIViewController {
 
     // MARK: - Properties
-    open fileprivate(set) var childViewController: UIViewController?
+    open fileprivate(set) var displayedViewController: UIViewController?
 
     // MARK: - Init
     public convenience init() {
@@ -21,17 +21,17 @@ open class ParentViewController: UIViewController {
 
     // MARK: - ViewContoller Containment
     override open var childViewControllerForStatusBarStyle : UIViewController? {
-        return childViewController
+        return displayedViewController
     }
 
-    func showViewController(_ viewController: UIViewController) {
-        if let existingVC = childViewController {
+    func dispaly(viewController: UIViewController) {
+        if let existingVC = displayedViewController {
             existingVC.willMove(toParentViewController: nil)
             existingVC.view.removeFromSuperview()
             existingVC.removeFromParentViewController()
         }
 
-        childViewController = viewController
+        displayedViewController = viewController
         addChildViewController(viewController)
         viewController.view.frame = view.bounds
         view.addSubview(viewController.view)
@@ -41,11 +41,11 @@ open class ParentViewController: UIViewController {
 }
 
 public extension Composer where ContainerViewController: ParentViewController {
-    public func showComposable(_ composable: Composable) {
+    public func display(composable: Composable) {
         currentComposables = currentComposables.filter {
             $0.viewController === containerViewController.presentedViewController
         }
         currentComposables.append(composable)
-        containerViewController.showViewController(composable.viewController)
+        containerViewController.show(viewController: composable.viewController)
     }
 }

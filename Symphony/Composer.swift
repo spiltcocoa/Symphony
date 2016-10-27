@@ -29,12 +29,12 @@ public protocol Composer: class {
 
 public extension Composer where ContainerViewController: UIViewController {
 
-    public func presentComposable(_ composable: Composable, animated: Bool = false) {
+    public func present(composable: Composable, animated: Bool = false) {
         currentComposables.append(composable)
         containerViewController.present(composable.viewController, animated: animated, completion: nil)
     }
 
-    public func dismissComposableAnimated(_ animated: Bool = false) {
+    public func dismissComposable(animated: Bool = false) {
         guard let presentedVC = containerViewController.presentedViewController else { return }
         currentComposables = currentComposables.filter { $0.viewController !== presentedVC }
         containerViewController.dismiss(animated: animated, completion: nil)
@@ -43,7 +43,7 @@ public extension Composer where ContainerViewController: UIViewController {
 
 public extension Composer where ContainerViewController: UINavigationController {
 
-    public func pushComposable(_ composable: Composable, animated: Bool = false) {
+    public func push(_ composable: Composable, animated: Bool = false) {
         currentComposables.append(composable)
         containerViewController.pushViewController(composable.viewController, animated: animated)
     }
@@ -54,7 +54,7 @@ public extension Composer where ContainerViewController: UINavigationController 
         containerViewController.popViewController(animated: animated)
     }
 
-    public func setComposables(_ composables: [Composable], animated: Bool = false) {
+    public func set(_ composables: [Composable], animated: Bool = false) {
         currentComposables = currentComposables.filter {
             $0.viewController === containerViewController.presentedViewController
         }
