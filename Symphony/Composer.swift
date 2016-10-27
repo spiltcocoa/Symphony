@@ -29,7 +29,7 @@ public protocol Composer: class {
 
 public extension Composer where ContainerViewController: UIViewController {
 
-    public func present(composable: Composable, animated: Bool = false) {
+    public func present(_ composable: Composable, animated: Bool = false) {
         currentComposables.append(composable)
         containerViewController.present(composable.viewController, animated: animated, completion: nil)
     }

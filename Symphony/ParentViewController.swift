@@ -41,7 +41,7 @@ public final class ParentViewController: UIViewController {
 }
 
 public extension Composer where ContainerViewController: ParentViewController {
-    public func display(composable: Composable) {
+    public func display(_ composable: Composable) {
         currentComposables = currentComposables.filter {
             $0.viewController === containerViewController.presentedViewController
         }
