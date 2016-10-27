@@ -9,10 +9,10 @@
 // A completely unadorned viewController container.
 // i.e. no TabBar, NavigationBar, etc.. It just hot swaps children.
 // Easy to swap other ViewControllers into with state changes.
-open class ParentViewController: UIViewController {
+public class ParentViewController: UIViewController {
 
     // MARK: - Properties
-    open fileprivate(set) var displayedViewController: UIViewController?
+    public fileprivate(set) var displayedViewController: UIViewController?
 
     // MARK: - Init
     public convenience init() {
@@ -20,11 +20,11 @@ open class ParentViewController: UIViewController {
     }
 
     // MARK: - ViewContoller Containment
-    override open var childViewControllerForStatusBarStyle : UIViewController? {
+    override public var childViewControllerForStatusBarStyle : UIViewController? {
         return displayedViewController
     }
 
-    func dispaly(viewController: UIViewController) {
+    public func dispaly(viewController: UIViewController) {
         if let existingVC = displayedViewController {
             existingVC.willMove(toParentViewController: nil)
             existingVC.view.removeFromSuperview()
