@@ -11,30 +11,30 @@ import Symphony
 class LoginComposer: Composer, Composable {
     lazy var containerViewController = ParentViewController()
     var currentComposables: [Composable] = []
-    var currentState: State = .Main
-    var eventListener: (Event -> Void)? = nil
+    var currentState: State = .main
+    var eventListener: ((Event) -> Void)? = nil
 }
 
 extension LoginComposer: Stateable {
-    enum State: StateType {
-        case Main
-        case Finished
+    enum State: StateProtocol {
+        case main
+        case finished
 
-        func canTransitionToState(state: State) -> Bool {
+        func canTransition(to state: State) -> Bool {
             switch(self, state) {
-            case(.Main, .Finished): return true
+            case(.main, .finished): return true
             default: return false
             }
         }
     }
 
-    func didTransitionFromState(state: State, toState: State) {
-        eventListener?(.Finished)
+    func didTransition(from oldState: State, to newState: State) {
+        eventListener?(.finished)
     }
 }
 
 extension LoginComposer: Eventable {
-    enum Event: EventType {
-        case Finished
+    enum Event: EventProtocol {
+        case finished
     }
 }

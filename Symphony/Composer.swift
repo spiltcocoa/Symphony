@@ -29,21 +29,21 @@ public protocol Composer: class {
 
 public extension Composer where ContainerViewController: UIViewController {
 
-    public func presentComposable(composable: Composable, animated: Bool = false) {
+    public func present(_ composable: Composable, animated: Bool = false) {
         currentComposables.append(composable)
-        containerViewController.presentViewController(composable.viewController, animated: animated, completion: nil)
+        containerViewController.present(composable.viewController, animated: animated, completion: nil)
     }
 
-    public func dismissComposableAnimated(animated: Bool = false) {
+    public func dismissComposable(animated: Bool = false) {
         guard let presentedVC = containerViewController.presentedViewController else { return }
         currentComposables = currentComposables.filter { $0.viewController !== presentedVC }
-        containerViewController.dismissViewControllerAnimated(animated, completion: nil)
+        containerViewController.dismiss(animated: animated, completion: nil)
     }
 }
 
 public extension Composer where ContainerViewController: UINavigationController {
 
-    public func pushComposable(composable: Composable, animated: Bool = false) {
+    public func push(_ composable: Composable, animated: Bool = false) {
         currentComposables.append(composable)
         containerViewController.pushViewController(composable.viewController, animated: animated)
     }
@@ -51,10 +51,10 @@ public extension Composer where ContainerViewController: UINavigationController 
     public func popComposable(animated: Bool = false) {
         guard let poppingVC = containerViewController.viewControllers.last else { return }
         currentComposables = currentComposables.filter { $0.viewController !== poppingVC }
-        containerViewController.popViewControllerAnimated(animated)
+        containerViewController.popViewController(animated: animated)
     }
 
-    public func setComposables(composables: [Composable], animated: Bool = false) {
+    public func set(_ composables: [Composable], animated: Bool = false) {
         currentComposables = currentComposables.filter {
             $0.viewController === containerViewController.presentedViewController
         }

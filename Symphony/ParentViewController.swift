@@ -9,10 +9,10 @@
 // A completely unadorned viewController container.
 // i.e. no TabBar, NavigationBar, etc.. It just hot swaps children.
 // Easy to swap other ViewControllers into with state changes.
-public class ParentViewController: UIViewController {
+public final class ParentViewController: UIViewController {
 
     // MARK: - Properties
-    public private(set) var childViewController: UIViewController?
+    public fileprivate(set) var displayedViewController: UIViewController?
 
     // MARK: - Init
     public convenience init() {
@@ -20,32 +20,32 @@ public class ParentViewController: UIViewController {
     }
 
     // MARK: - ViewContoller Containment
-    override public func childViewControllerForStatusBarStyle() -> UIViewController? {
-        return childViewController
+    override public var childViewControllerForStatusBarStyle : UIViewController? {
+        return displayedViewController
     }
 
-    func showViewController(viewController: UIViewController) {
-        if let existingVC = childViewController {
-            existingVC.willMoveToParentViewController(nil)
+    public func display(viewController: UIViewController) {
+        if let existingVC = displayedViewController {
+            existingVC.willMove(toParentViewController: nil)
             existingVC.view.removeFromSuperview()
             existingVC.removeFromParentViewController()
         }
 
-        childViewController = viewController
+        displayedViewController = viewController
         addChildViewController(viewController)
         viewController.view.frame = view.bounds
         view.addSubview(viewController.view)
-        viewController.didMoveToParentViewController(self)
+        viewController.didMove(toParentViewController: self)
         setNeedsStatusBarAppearanceUpdate()
     }
 }
 
 public extension Composer where ContainerViewController: ParentViewController {
-    public func showComposable(composable: Composable) {
+    public func display(_ composable: Composable) {
         currentComposables = currentComposables.filter {
             $0.viewController === containerViewController.presentedViewController
         }
         currentComposables.append(composable)
-        containerViewController.showViewController(composable.viewController)
+        containerViewController.display(viewController: composable.viewController)
     }
 }
