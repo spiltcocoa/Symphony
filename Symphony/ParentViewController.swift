@@ -23,6 +23,10 @@ public final class ParentViewController: UIViewController {
     override public var childViewControllerForStatusBarStyle : UIViewController? {
         return displayedViewController
     }
+    
+    override public var childViewControllerForStatusBarHidden : UIViewController? {
+        return displayedViewController
+    }
 
     public func display(viewController: UIViewController) {
         if let existingVC = displayedViewController {
