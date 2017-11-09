@@ -27,7 +27,7 @@ public protocol Composer: class {
 
 // MARK: - Convenience API for Composers using UIKit `UIViewController`s
 
-public extension Composer where ContainerViewController: UIViewController {
+public extension Composer {
 
     public func present(_ composable: Composable, animated: Bool = false) {
         currentComposables.append(composable)
