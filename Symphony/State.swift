@@ -6,23 +6,23 @@
 //  Copyright © 2016 Spilt Cocoa. All rights reserved.
 //
 
-public protocol StateType {
-    func canTransitionToState(state: Self) -> Bool
+public protocol StateProtocol {
+    func canTransition(to state: Self) -> Bool
 }
 
 public protocol Stateable: class {
-    typealias State: StateType
+    associatedtype State: StateProtocol
     var currentState: State { get set }
 
-    func didTransitionFromState(state: State, toState: State)
+    func didTransition(from oldState: State, to newState: State)
 }
 
 public extension Stateable {
-    func transitionToState(state: State) {
-        guard currentState.canTransitionToState(state) else { return }
+    func transition(to state: State) {
+        guard currentState.canTransition(to: state) else { return }
         let oldState = currentState
         currentState = state
-        didTransitionFromState(oldState, toState: currentState)
+        didTransition(from: oldState, to: currentState)
     }
 }
 
