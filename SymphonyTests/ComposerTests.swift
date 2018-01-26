@@ -209,6 +209,17 @@ class NavigationComposerTests: XCTestCase {
         XCTAssertNotNil(weakPushedComposable)
     }
 
+    func test_whenPresentingMultipleModals_presentingDoesNotCauseACrash() {
+
+        let presentedComposable1 = BasicComposable()
+        let presentedComposable2 = BasicComposable()
+
+        composer.present(presentedComposable1)
+        composer.present(presentedComposable2)
+
+        XCTAssert(presentedComposable1.viewController.presentedViewController === presentedComposable2)
+    }
+
     func test_whenPushesMultiple_allPushedAreRetained() {
         weak var weakFirstPushedComposable: BasicComposable?
         weak var weakSecondPushedComposable: BasicComposable?
