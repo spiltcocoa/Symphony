@@ -1,0 +1,16 @@
+machine:
+  xcode:
+    version: '9.2'
+  environment:
+    XCODE_PROJECT: 'Symphony.xcodeproj'
+    XCODE_SCHEME: 'Symphony'
+    LANG: en_US.UTF-8
+
+dependencies:
+  pre:
+  cache_directories:
+    - "Carthage/Build"
+
+test:
+  override:
+    - rake circle
