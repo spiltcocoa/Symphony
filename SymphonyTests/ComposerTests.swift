@@ -211,13 +211,26 @@ class NavigationComposerTests: XCTestCase {
 
     func test_whenPresentingMultipleModals_presentingDoesNotCauseACrash() {
 
+        let presentationExpectation = expectation(description: "Second view was modally presented")
+
         let presentedComposable1 = BasicComposable()
         let presentedComposable2 = BasicComposable()
 
         composer.present(presentedComposable1)
-        composer.present(presentedComposable2)
 
-        XCTAssert(presentedComposable1.viewController.presentedViewController === presentedComposable2)
+        DispatchQueue.main.async {
+            self.composer.present(presentedComposable2)
+            presentationExpectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+
+            XCTAssertTrue(presentedComposable1.viewController.presentedViewController === presentedComposable2.viewController)
+        }
+
     }
 
     func test_whenPushesMultiple_allPushedAreRetained() {
