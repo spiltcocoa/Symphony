@@ -30,8 +30,18 @@ public protocol Composer: class {
 public extension Composer {
 
     public func present(_ composable: Composable, animated: Bool = false) {
+
         currentComposables.append(composable)
-        containerViewController.present(composable.viewController, animated: animated, completion: nil)
+
+        let presentingViewController: UIViewController
+
+        if let presentedViewController = containerViewController.presentedViewController {
+            presentingViewController = presentedViewController
+        } else {
+            presentingViewController = containerViewController
+        }
+
+        presentingViewController.present(composable.viewController, animated: animated, completion: nil)
     }
 
     public func dismissComposable(animated: Bool = false) {
