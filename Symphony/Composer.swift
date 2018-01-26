@@ -41,6 +41,8 @@ public extension Composer {
             presentingViewController = containerViewController
         }
 
+        print("presentingViewController:  \(presentingViewController)")
+
         presentingViewController.present(composable.viewController, animated: animated, completion: nil)
     }
 
