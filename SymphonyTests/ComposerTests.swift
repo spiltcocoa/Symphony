@@ -209,6 +209,30 @@ class NavigationComposerTests: XCTestCase {
         XCTAssertNotNil(weakPushedComposable)
     }
 
+    func test_whenPresentingMultipleModals_presentingDoesNotCauseACrash() {
+
+        let presentationExpectation = expectation(description: "Second view was modally presented")
+
+        let presentedComposable1 = BasicComposable()
+        let presentedComposable2 = BasicComposable()
+
+        composer.present(presentedComposable1)
+
+        DispatchQueue.main.async {
+            self.composer.present(presentedComposable2)
+            presentationExpectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+
+            XCTAssertTrue(presentedComposable1.viewController.presentedViewController === presentedComposable2.viewController)
+        }
+
+    }
+
     func test_whenPushesMultiple_allPushedAreRetained() {
         weak var weakFirstPushedComposable: BasicComposable?
         weak var weakSecondPushedComposable: BasicComposable?
