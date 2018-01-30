@@ -33,13 +33,7 @@ public extension Composer {
 
         currentComposables.append(composable)
 
-        let presentingViewController: UIViewController
-
-        if let presentedViewController = containerViewController.presentedViewController {
-            presentingViewController = presentedViewController
-        } else {
-            presentingViewController = containerViewController
-        }
+        let presentingViewController = containerViewController.presentedViewController ?? containerViewController
 
         presentingViewController.present(composable.viewController, animated: animated, completion: nil)
     }
