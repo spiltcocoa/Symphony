@@ -33,7 +33,16 @@ public extension Composer {
 
         currentComposables.append(composable)
 
-        let presentingViewController = containerViewController.presentedViewController ?? containerViewController
+        var presentingViewController = containerViewController.presentedViewController ?? containerViewController
+
+        // workaround for problem that occurs if the top most modal is a share sheet:
+        if presentingViewController is UIActivityViewController {
+            let shareSheetController = presentingViewController
+
+            presentingViewController = presentingViewController.presentingViewController ?? containerViewController
+
+            shareSheetController.dismiss(animated: false, completion: nil)
+        }
 
         presentingViewController.present(composable.viewController, animated: animated, completion: nil)
     }
