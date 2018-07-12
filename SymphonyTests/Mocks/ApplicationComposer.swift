@@ -8,61 +8,61 @@
 
 import Symphony
 
-class ApplicationComposer: ComposerType {
-    lazy var container = ContainerViewController()
-    var currentComposable: Composable? = nil
-    var currentState: State = .Login
+class ApplicationComposer: Composer {
+    lazy var containerViewController = ParentViewController()
+    var currentComposables: [Composable] = []
+    var currentState: State = .login
     var receivedStateMessage = false
     var receivedEvent = false
 
     func start() {
-        showComposable(loginComposable())
+        display(loginComposable())
     }
 
-    private func loginComposable() -> Composable {
+    fileprivate func loginComposable() -> Composable {
         let composable = LoginComposer()
         composable.eventListener = onLoginEvent
 
         return composable
     }
 
-    private func mainComposable() -> Composable {
+    fileprivate func mainComposable() -> Composable {
         let composable = LoginComposer()
         composable.eventListener = onLoginEvent
 
         return composable
     }
 
-    private func onLoginEvent(event: LoginComposer.Event) {
+    fileprivate func onLoginEvent(_ event: LoginComposer.Event) {
         receivedEvent = true
         
         switch event {
-        case .Finished: transitionToState(.Main)
+        case .finished: transition(to: .main)
         }
     }
 
-    private func onMainEvent(event: MainComposer.Event) {
+    fileprivate func onMainEvent(_ event: MainComposer.Event) {
         print(event)
     }
 }
 
 extension ApplicationComposer: Stateable {
-    enum State: StateType {
-        case Login
-        case LoggedIn
-        case Main
-        case Logout
+    enum State: StateProtocol {
+        case login
+        case loggedIn
+        case main
+        case logout
 
-        func canTransitionToState(state: State) -> Bool {
+        func canTransition(to state: State) -> Bool {
             switch(self, state) {
-            case(.Login, .Main): return true
-            case(.Login, .Logout): return false
+            case(.login, .main): return true
+            case(.login, .logout): return false
             default: return false
             }
         }
     }
 
-    func didTransitionFromState(state: State, toState: State) {
+    func didTransition(from oldState: State, to newState: State) {
         receivedStateMessage = true
     }
 }

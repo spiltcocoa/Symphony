@@ -7,10 +7,10 @@
 //
 
 
-public protocol EventType {}
+public protocol EventProtocol {}
 
 public protocol Eventable {
-    typealias Event: EventType
-    typealias ListenerType = Event -> Void
+    associatedtype Event: EventProtocol
+    associatedtype ListenerType = (Event) -> Void
     var eventListener: ListenerType? { get set }
 }
