@@ -38,6 +38,8 @@ public final class ParentViewController: UIViewController {
         displayedViewController = viewController
         addChildViewController(viewController)
         viewController.view.frame = view.bounds
+        viewController.view.setNeedsLayout()
+        viewController.view.layoutIfNeeded()
         view.addSubview(viewController.view)
         viewController.didMove(toParentViewController: self)
         setNeedsStatusBarAppearanceUpdate()
